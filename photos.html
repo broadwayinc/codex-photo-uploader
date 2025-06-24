@@ -11,20 +11,31 @@
 <body>
     <div class="container">
         <h2>My Photos</h2>
+        <p><a href="upload.html">Upload More Photos</a></p>
         <div id="grid" class="photo-grid"></div>
     </div>
     <script>
     onLoad(function(){
+        addLogoutButton();
         requireLogin('login.html').then(() => {
             skapi.getRecords({ table: 'photos' }).then(res => {
                 const grid = document.getElementById('grid');
                 res.list.forEach(rec => {
                     if(rec.bin && rec.bin.photo){
                         rec.bin.photo.forEach(file => {
+                            const item = document.createElement('div');
+                            item.className = 'photo-item';
                             const img = document.createElement('img');
                             img.className = 'photo';
                             img.src = file.url;
-                            grid.appendChild(img);
+                            item.appendChild(img);
+                            if(rec.data && rec.data.description){
+                                const p = document.createElement('p');
+                                p.className = 'photo-desc';
+                                p.textContent = rec.data.description;
+                                item.appendChild(p);
+                            }
+                            grid.appendChild(item);
                         });
                     }
                 });

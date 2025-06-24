@@ -16,6 +16,7 @@
     </div>
     <script>
     onLoad(function(){
+        addLogoutButton();
         skapi.getProfile().then(function(profile){
             const nav = document.getElementById('nav');
             const welcome = document.getElementById('welcome');
