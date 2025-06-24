@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Sign-Up</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/skapi-js@latest/dist/skapi.js"></script>
+    <script src="service.js"></script>
+    <script src="common.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Sign-Up</h2>
+        <form id="signupForm">
+            <label>Email<br><input type="email" name="email" required></label>
+            <label>Password<br><input type="password" name="password" required></label>
+            <label>Name<br><input type="text" name="name"></label>
+            <input type="submit" value="Sign-Up">
+        </form>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+    <script>
+    onLoad(function(){
+        redirectIfLoggedIn('index.html');
+        document.getElementById('signupForm').addEventListener('submit', function(e){
+            skapi.signup(e).then(function(){
+                window.location.replace('login.html');
+            }).catch(err => alert(err.message));
+        });
+    });
+    </script>
+</body>
+</html>
