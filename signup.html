@@ -21,6 +21,7 @@
     </div>
     <script>
     onLoad(function(){
+        addLogoutButton();
         redirectIfLoggedIn('index.html');
         document.getElementById('signupForm').addEventListener('submit', function(e){
             skapi.signup(e).then(function(){

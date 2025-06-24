@@ -20,6 +20,7 @@
     </div>
     <script>
     onLoad(function(){
+        addLogoutButton();
         redirectIfLoggedIn('index.html');
         document.getElementById('loginForm').addEventListener('submit', function(e){
             skapi.login(e).then(function(){

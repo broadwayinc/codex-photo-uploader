@@ -20,6 +20,7 @@
     </div>
     <script>
     onLoad(function(){
+        addLogoutButton();
         requireLogin('login.html').then(() => {
             document.getElementById('uploadForm').addEventListener('submit', function(e){
                 const progress = document.getElementById('progress');

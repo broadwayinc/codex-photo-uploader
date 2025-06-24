@@ -63,3 +63,17 @@ img.photo {
 progress {
     width: 100%;
 }
+
+.photo-item {
+    text-align: center;
+}
+
+.photo-desc {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+#logoutContainer {
+    text-align: center;
+    margin-top: 20px;
+}
