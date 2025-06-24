@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>My Photos</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/skapi-js@latest/dist/skapi.js"></script>
+    <script src="service.js"></script>
+    <script src="common.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>My Photos</h2>
+        <div id="grid" class="photo-grid"></div>
+    </div>
+    <script>
+    onLoad(function(){
+        requireLogin('login.html').then(() => {
+            skapi.getRecords({ table: 'photos' }).then(res => {
+                const grid = document.getElementById('grid');
+                res.list.forEach(rec => {
+                    if(rec.bin && rec.bin.photo){
+                        rec.bin.photo.forEach(file => {
+                            const img = document.createElement('img');
+                            img.className = 'photo';
+                            img.src = file.url;
+                            grid.appendChild(img);
+                        });
+                    }
+                });
+            }).catch(err => alert(err.message));
+        });
+    });
+    </script>
+</body>
+</html>

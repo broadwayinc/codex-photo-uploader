@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Photo Uploader</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/skapi-js@latest/dist/skapi.js"></script>
+    <script src="service.js"></script>
+    <script src="common.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Photo Uploader</h1>
+        <p id="welcome"></p>
+        <nav id="nav"></nav>
+    </div>
+    <script>
+    onLoad(function(){
+        skapi.getProfile().then(function(profile){
+            const nav = document.getElementById('nav');
+            const welcome = document.getElementById('welcome');
+            nav.innerHTML = '';
+            if(profile){
+                welcome.textContent = 'Welcome, ' + (profile.name || profile.email);
+                nav.innerHTML += '<a href="upload.html">Upload Photos</a>';
+                nav.innerHTML += '<a href="photos.html">View Photos</a>';
+                nav.innerHTML += '<a href="#" id="logout">Logout</a>';
+            } else {
+                welcome.textContent = 'You are not logged in.';
+                nav.innerHTML += '<a href="signup.html">Sign-Up</a>';
+                nav.innerHTML += '<a href="login.html">Login</a>';
+            }
+        });
+    });
+    document.addEventListener('click', function(e){
+        if(e.target.id === 'logout'){
+            e.preventDefault();
+            skapi.logout().then(function(){
+                location.reload();
+            }).catch(err => alert(err.message));
+        }
+    });
+    </script>
+</body>
+</html>

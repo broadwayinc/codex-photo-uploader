@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Upload Photos</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/skapi-js@latest/dist/skapi.js"></script>
+    <script src="service.js"></script>
+    <script src="common.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Upload Photos</h2>
+        <form id="uploadForm">
+            <label>Description<br><input type="text" name="description"></label>
+            <label>Photo<br><input type="file" name="photo" multiple accept="image/*" required></label>
+            <input type="submit" value="Upload">
+        </form>
+        <progress id="progress" value="0" max="100" style="display:none"></progress>
+    </div>
+    <script>
+    onLoad(function(){
+        requireLogin('login.html').then(() => {
+            document.getElementById('uploadForm').addEventListener('submit', function(e){
+                const progress = document.getElementById('progress');
+                function update(p){
+                    if(p.status === 'upload'){
+                        progress.style.display = 'block';
+                        progress.value = p.progress;
+                    }
+                }
+                skapi.postRecord(e, { table: 'photos', progress: update }).then(function(){
+                    window.location.replace('photos.html');
+                }).catch(err => alert(err.message));
+            });
+        });
+    });
+    </script>
+</body>
+</html>
